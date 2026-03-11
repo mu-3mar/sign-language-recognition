@@ -9,8 +9,8 @@ import os
 
 # Add the parent directory to Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from app import app
-from modules.sign_processor import SignProcessor, CNN1D
+from slr.api import app
+from slr.sign_processor import SignProcessor, CNN1D
 import cv2
 import base64
 from collections import deque
@@ -19,10 +19,10 @@ class TestSignLanguageRecognition(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures."""
         self.client = TestClient(app)
-        # Get the path to the modules directory (one level up from test file)
+        # Get the path to the models directory (one level up from test file)
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        self.model_path = os.path.join(base_dir, "modules", "cnn_asl_model_full.pth")
-        self.labels_path = os.path.join(base_dir, "modules", "label_encoder_classes.npy")
+        self.model_path = os.path.join(base_dir, "models", "cnn_asl_model_full.pth")
+        self.labels_path = os.path.join(base_dir, "models", "label_encoder_classes.npy")
         
         # Mock dependencies for SignProcessor
         self.mock_model = MagicMock(spec=CNN1D)
@@ -167,14 +167,14 @@ class TestSignLanguageRecognition(unittest.TestCase):
         self.assertEqual(processor.frame_count, 0)
         self.assertFalse(processor.is_stable)
 
-    @patch('app.processor', new=MagicMock())  # Mock SignProcessor to reduce initialization
+    @patch('slr.api.processor', new=MagicMock())  # Mock SignProcessor to reduce initialization
     def test_root_endpoint(self):
         """Test GET / endpoint."""
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), {"message": "Sign Language Recognition API is running"})
 
-    @patch('app.processor', new=MagicMock())  # Mock SignProcessor
+    @patch('slr.api.processor', new=MagicMock())  # Mock SignProcessor
     def test_process_image_endpoint_invalid_data(self):
         """Test POST /ws with invalid base64 image data."""
         # Use an invalid base64 string to trigger binascii.Error
@@ -187,7 +187,7 @@ class TestSignLanguageRecognition(unittest.TestCase):
 
     @patch('cv2.imdecode')
     @patch('numpy.frombuffer')
-    @patch('app.processor')
+    @patch('slr.api.processor')
     def test_process_image_endpoint(self, mock_processor, mock_frombuffer, mock_imdecode):
         """Test POST /ws with valid image data."""
         # Create a dummy image and encode it
@@ -213,7 +213,7 @@ class TestSignLanguageRecognition(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['status'], 'success')
 
-    @patch('app.processor')
+    @patch('slr.api.processor')
     def test_reset_endpoint(self, mock_processor):
         """Test POST /reset endpoint."""
         mock_processor.reset.return_value = {"status": "success", "message": "Processor reset"}

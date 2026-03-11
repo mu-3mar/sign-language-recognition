@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# OS / editor
+.DS_Store
+
+# Model artifacts (keep folders with .gitkeep)
+models/**
+!models/.gitkeep
+*.pth
+*.pt
+*.onnx
+*.npy
+
+# Test artifacts (keep folders with .gitkeep)
+tests/artifacts/**
+!tests/artifacts/.gitkeep
+

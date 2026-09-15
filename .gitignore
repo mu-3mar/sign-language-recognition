@@ -38,3 +38,6 @@ temp.html
 .env.*
 !.env.example
 *.pem
+
+# Generated test artifacts
+tests/artifacts/*.png

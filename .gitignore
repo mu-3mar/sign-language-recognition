@@ -1,28 +1,40 @@
-# Python
+# Python cache / compiled files
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
 *$py.class
+*.so
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Testing / tooling cache
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.cache/
 
-# Virtual envs
-.venv/
+# Virtual environments
 venv/
+.venv/
 env/
+ENV/
 
-# OS / editor
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+*~
 .DS_Store
+Thumbs.db
 
-# Model artifacts (keep folders with .gitkeep)
-models/**
-!models/.gitkeep
-*.pth
-*.pt
-*.onnx
-*.npy
+# Logs / temporary files
+*.log
+temp.html
 
-# Test artifacts (keep folders with .gitkeep)
-tests/artifacts/**
-!tests/artifacts/.gitkeep
-
+# Secrets / local environment
+.env
+.env.*
+!.env.example
+*.pem

@@ -8,16 +8,15 @@ from sklearn.preprocessing import LabelEncoder
 from torch.utils.data import Dataset, DataLoader
 import matplotlib.pyplot as plt
 import seaborn as sns
-import os
+from pathlib import Path
 
-# Setup paths
-current_dir = os.path.dirname(os.path.abspath(__file__))
-data_path = os.path.join(current_dir, "landmarks.csv")
-model_save_path = os.path.join(current_dir, "cnn_asl_model_full.pth")
-encoder_save_path = os.path.join(current_dir, "label_encoder_classes.npy")
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DATA_PATH = PROJECT_ROOT / "data" / "landmarks.csv"
+MODEL_SAVE_PATH = PROJECT_ROOT / "models" / "cnn_asl_model_full.pth"
+ENCODER_SAVE_PATH = PROJECT_ROOT / "models" / "label_encoder_classes.npy"
 
 # Load data
-df = pd.read_csv(data_path)
+df = pd.read_csv(DATA_PATH)
 X = df.drop(columns=['label']).values
 y = df['label'].values
 
@@ -156,10 +155,10 @@ try:
         'model_state_dict': model.state_dict(),
         'input_size': X_final.shape[2],
         'num_classes': num_classes
-    }, model_save_path)
-    np.save(encoder_save_path, label_encoder.classes_)
-    print(f"[INFO] Model saved to {model_save_path}")
-    print(f"[INFO] Encoder saved to {encoder_save_path}")
+    }, MODEL_SAVE_PATH)
+    np.save(ENCODER_SAVE_PATH, label_encoder.classes_)
+    print(f"[INFO] Model saved to {MODEL_SAVE_PATH}")
+    print(f"[INFO] Encoder saved to {ENCODER_SAVE_PATH}")
 except Exception as e:
     print(f"[ERROR] Save failed: {e}")
     exit()

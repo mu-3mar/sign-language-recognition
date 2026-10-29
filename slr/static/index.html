@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fff8f5" />
+    <title>Signa — Sign Language Recognition</title>
+    <link rel="stylesheet" href="/ui/assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/ui" aria-label="Signa home">
+        <span class="brand-mark"><iframe src="/ui/assets/logo-animated.html" title="Signa logo"></iframe></span>
+        <span>
+          <strong>Signa</strong>
+          <small>INTELLIGENT SIGN RECOGNITION</small>
+        </span>
+      </a>
+      <div id="connection-status" class="status-pill status-idle">
+        <span class="status-dot"></span>
+        <span>Ready to connect</span>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <section class="intro">
+        <p class="eyebrow">REAL-TIME COMMUNICATION</p>
+        <h1>Turn every gesture into <span>meaning.</span></h1>
+        <p class="intro-copy">
+          Signa reads hand landmarks from your camera and translates American
+          Sign Language gestures into text, one steady sign at a time.
+        </p>
+      </section>
+
+      <div id="notice" class="notice" role="status">
+        <span class="notice-icon">i</span>
+        <p><strong>Camera permission is needed.</strong> Your video stays in
+          this browser and only captured frames are sent to the recognition API.</p>
+      </div>
+
+      <section class="workspace-grid" aria-label="Recognition workspace">
+        <article class="card camera-card">
+          <div class="section-heading">
+            <div class="section-title">
+              <span class="step-badge">01</span>
+              <div><h2>Live camera</h2><p>Keep one hand in frame</p></div>
+            </div>
+            <span id="camera-state" class="mini-label">OFFLINE</span>
+          </div>
+          <div class="camera-frame">
+            <video id="camera" autoplay muted playsinline></video>
+            <canvas id="capture-canvas" hidden></canvas>
+            <div id="camera-placeholder" class="camera-placeholder">
+              <span class="camera-icon">◉</span>
+              <strong>Camera is paused</strong>
+              <small>Start recognition to begin</small>
+            </div>
+            <div class="camera-overlay">
+              <span id="stability-badge" class="overlay-badge">Waiting for hand</span>
+              <span id="fps-value">0 FPS</span>
+            </div>
+          </div>
+          <div class="actions">
+            <button id="start-button" class="button button-primary">Start recognition</button>
+            <button id="stop-button" class="button button-secondary" disabled>Pause camera</button>
+          </div>
+        </article>
+
+        <article class="card result-card">
+          <div class="section-heading">
+            <div class="section-title">
+              <span class="step-badge">02</span>
+              <div><h2>Recognized text</h2><p>Your live translation</p></div>
+            </div>
+            <span class="mini-label">OUTPUT</span>
+          </div>
+          <div class="result-panel">
+            <p class="result-eyebrow">CURRENT MESSAGE</p>
+            <p id="recognized-text" class="recognized-text" aria-live="polite">Start a session to see your signs here.</p>
+          </div>
+          <div class="metrics">
+            <div><span>Detected sign</span><strong id="detected-sign">—</strong></div>
+            <div><span>Confidence</span><strong id="confidence-value">0%</strong></div>
+          </div>
+          <button id="reset-button" class="button button-secondary reset-button">Clear message</button>
+        </article>
+      </section>
+
+      <p id="error-message" class="error-message" role="alert" hidden></p>
+      <p class="privacy-note">Signa is a computer-vision demo. Recognition quality depends on lighting, camera position, and model training.</p>
+    </main>
+
+    <footer class="site-footer">
+      <strong>SIGNA / ASL RECOGNITION</strong>
+      <span>Powered by MediaPipe + PyTorch</span>
+    </footer>
+    <script src="/ui/assets/app.js"></script>
+  </body>
+</html>

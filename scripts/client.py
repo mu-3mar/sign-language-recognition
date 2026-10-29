@@ -1,11 +1,13 @@
 import cv2
-import requests
 import base64
-import numpy as np
+import os
 
-# API endpoints
-API_URL = "http://localhost:5000/ws"
-RESET_URL = "http://localhost:5000/reset"
+import numpy as np
+import requests
+
+API_URL = os.getenv("SLR_API_URL", "http://localhost:5000")
+PROCESS_URL = f"{API_URL.rstrip('/')}/ws"
+RESET_URL = f"{API_URL.rstrip('/')}/reset"
 
 def frame_to_base64(frame):
     """Convert frame to base64 string"""
@@ -16,7 +18,7 @@ def frame_to_base64(frame):
 def reset_processor():
     """Reset the processor state"""
     try:
-        response = requests.post(RESET_URL)
+        response = requests.post(RESET_URL, timeout=10)
         if response.status_code == 200:
             print("Processor reset successfully")
         else:
@@ -29,7 +31,7 @@ def process_frame(frame):
     try:
         base64_image = frame_to_base64(frame)
         payload = {"image": base64_image}
-        response = requests.post(API_URL, json=payload)
+        response = requests.post(PROCESS_URL, json=payload, timeout=10)
         if response.status_code == 200:
             return response.json()
         else:

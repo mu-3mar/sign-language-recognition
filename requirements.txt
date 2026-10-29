@@ -1,31 +1,14 @@
-# Core dependencies
+# Runtime dependencies
 fastapi==0.115.12
-uvicorn==0.34.2
+uvicorn[standard]==0.34.2
 python-multipart==0.0.20
 numpy==1.26.4
 opencv-python==4.11.0.86
 mediapipe==0.10.21
-torch==2.6.0+cu124
-torchvision==0.21.0+cu124
-torchaudio==2.6.0+cu124
-
-# API and networking
+torch==2.6.0
+torchvision==0.21.0
+torchaudio==2.6.0
 requests==2.32.3
 python-dotenv==1.1.0
-
-# Text processing
 pyspellchecker==0.8.2
-
-# Utilities
 pillow==11.0.0
-matplotlib==3.10.1
-matplotlib-inline==0.1.7
-seaborn==0.13.2
-
-# Development tools
-pytest==8.0.0
-black==24.1.1
-flake8==7.0.0
-
-# Optional: GPU support
-# cuda-python  # Uncomment if using CUDA 

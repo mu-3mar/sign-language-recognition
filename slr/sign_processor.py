@@ -1,12 +1,14 @@
+from collections import deque
+import time
+
 import cv2
 import mediapipe as mp
 import numpy as np
 import torch
 import torch.nn as nn
-from collections import deque
-import time
 from spellchecker import SpellChecker
-import os
+
+from slr.config import DEFAULT_LABELS_PATH, DEFAULT_MODEL_PATH
 
 # CNN model for sign language recognition
 class CNN1D(nn.Module):
@@ -35,12 +37,10 @@ class CNN1D(nn.Module):
 # Main sign language processor class
 class SignProcessor:
     def __init__(self, model_path=None, labels_path=None):
-        # Repo root (parent of `slr/`)
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         if model_path is None:
-            model_path = os.path.join(base_dir, "models", "cnn_asl_model_full.pth")
+            model_path = str(DEFAULT_MODEL_PATH)
         if labels_path is None:
-            labels_path = os.path.join(base_dir, "models", "label_encoder_classes.npy")
+            labels_path = str(DEFAULT_LABELS_PATH)
 
         # Initialize tracking variables
         self.landmark_history = deque(maxlen=5)  # Increased history size for better stability

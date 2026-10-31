@@ -42,6 +42,4 @@ temp.html
 # Generated test artifacts
 tests/artifacts/*.png
 
-# Local training data and generated checkpoints
-data/*
-!data/.gitkeep
+
